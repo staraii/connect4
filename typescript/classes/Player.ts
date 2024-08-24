@@ -10,4 +10,12 @@ export default class Player {
     this.color = color;
     this.playerType = playerType;
   }
+
+  set name(name: string) {
+    if (name.trim().length > 0) {
+      this._name = name;
+    } else {
+      throw new Error("Name must contain at least one character.");
+    }
+  }
 }
