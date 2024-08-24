@@ -18,4 +18,8 @@ export default class Player {
       throw new Error("Name must contain at least one character.");
     }
   }
+
+  get name() {
+    return this._name;
+  }
 }
