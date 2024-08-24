@@ -22,4 +22,23 @@ export default class Player {
   get name() {
     return this._name;
   }
+
+  promptForPlayerName() {
+    let valid = false;
+    while (!valid) {
+      try {
+        let playerName = prompt("Enter player name: ");
+        this.name = playerName;
+        valid = true;
+      } catch (error) {
+        let message;
+        if (error instanceof Error) {
+          message = error.message;
+        } else {
+          message = String(error);
+        }
+        console.log(message);
+      }
+    }
+  }
 }
