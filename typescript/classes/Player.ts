@@ -1,45 +1,30 @@
 import prompt from "../helpers/prompt.js";
-import { PlayerType } from "../types/types.js";
+//import { PlayerType } from "../types/types.js";
 
 export default class Player {
-  #name!: string;
-  #playerType!: PlayerType;
+  #name: string = "";
+  //#playerType!: PlayerType;
 
-  constructor(name: string, playerType: number) {
+  constructor(name: string, _playerType: number) {
     this.name = name;
-    this.playerType = playerType;
+    //this.playerType = playerType;
   }
 
-  set name(name: string) {
-    if (name.trim().length > 0) {
-      this.#name = name;
-    } else {
-      throw new Error("Player name must contain at least one character.");
+  set name(value: string) {
+    if (value.trim().length === 0) {
+      value = prompt("Enter player name: ");
     }
+    while (value.trim().length === 0) {
+      console.clear();
+      console.log("Player name must be at least on character long. Please try again!");
+      value = prompt("Enter player name: ");
+    }
+    this.#name = value;
   }
 
   get name() {
     return this.#name;
   }
-
-  // promptForPlayerName() {
-  //   let valid = false;
-  //   while (!valid) {
-  //     try {
-  //       let playerName = prompt("Enter player name: ");
-  //       this.name = playerName;
-  //       valid = true;
-  //     } catch (error) {
-  //       let message;
-  //       if (error instanceof Error) {
-  //         message = error.message;
-  //       } else {
-  //         message = String(error);
-  //       }
-  //       console.log(message);
-  //     }
-  //   }
-  // }
 
   // get playerType() {
   //   return this._playerType;
