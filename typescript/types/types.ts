@@ -10,3 +10,9 @@ export enum PlayerType {
   Easy,
   Hard
 }
+
+export enum Color {
+  X = 1,
+  O
+}
+
