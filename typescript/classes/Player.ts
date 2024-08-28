@@ -26,18 +26,20 @@ export default class Player {
     return this.#name;
   }
 
-  set playerType(type: number) {
-    if (!(type in PlayerType)) {
-      console.clear();
-      console.log("Computer players difficulty level.\n1. Easy \n2. Hard\n")
-      type = prompt("Select level: ");
+  set playerType(typeInput: number) {
+    if (typeInput === 1) {
+      this.#playerType = typeInput;
     }
-    while (!(type in PlayerType)) {
-      console.clear();
-      console.log("Invalid level input! \n1. Easy \n2. Hard\n");
-      type = prompt("Please select level 1 or 2: ");
+    if (typeInput === 0) {
+      console.log("\n1. Easy \n2. Hard");
+      typeInput = +prompt("Select computer difficulty level(1-2): ");
+      while (typeInput < 1 || typeInput > 2) {
+        console.log("\nInvalid option! Please try again. \n1. Easy \n2. Hard");
+        typeInput = +prompt("Select computer difficulty level(1-2): ");
+      }
+      console.log("Computer level " + PlayerType[typeInput + 1] + " selected.");
+      this.#playerType = typeInput + 1;
     }
-    this.#playerType = type;
   }
   get playerType() {
     return this.#playerType;
