@@ -1,13 +1,13 @@
 import prompt from "../helpers/prompt.js";
-//import { PlayerType } from "../types/types.js";
+import { PlayerType } from "../types/types.js";
 
 export default class Player {
   #name: string = "";
-  //#playerType!: PlayerType;
+  #playerType!: PlayerType;
 
-  constructor(name: string, _playerType: number) {
+  constructor(name: string, playerType: number) {
     this.name = name;
-    //this.playerType = playerType;
+    this.playerType = playerType;
   }
 
   set name(value: string) {
@@ -26,17 +26,20 @@ export default class Player {
     return this.#name;
   }
 
-  // get playerType() {
-  //   return this._playerType;
-  // }
-  // set playerType(type: string) {
-  //   if (type === "1") this._playerType = "Player";
-  //   if (type === "2") this._playerType = "Computer Easy";
-  //   if (type === "3") {
-  //     this._playerType = "Computer Hard";
-  //   } else {
-  //     throw new Error("Game type must be a value between 1-3.");
-  //   }
-    
-  // }
+  set playerType(type: number) {
+    if (!(type in PlayerType)) {
+      console.clear();
+      console.log("Computer players difficulty level.\n1. Easy \n2. Hard\n")
+      type = prompt("Select level: ");
+    }
+    while (!(type in PlayerType)) {
+      console.clear();
+      console.log("Invalid level input! \n1. Easy \n2. Hard\n");
+      type = prompt("Please select level 1 or 2: ");
+    }
+    this.#playerType = type;
+  }
+  get playerType() {
+    return this.#playerType;
+  }
 }
