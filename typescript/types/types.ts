@@ -16,3 +16,7 @@ export enum Color {
   O
 }
 
+export type GamePlayer = {
+  name: string;
+  playerType: PlayerType;
+}
