@@ -4,13 +4,13 @@ import { GameType } from "../types/types.js";
 
 export default class GameSetup {
   #gameType: string = "";
-  playerOne: Player;
-  playerTwo: Player;
+  #playerOne: Player;
+  #playerTwo: Player;
 
   constructor() {
     this.gameType = "";
-    this.playerOne = new Player(this.#gameType === GameType[3] ? "Computer" : "", this.#gameType === GameType[3] ? 0 : 1);
-    this.playerTwo = new Player(this.#gameType === GameType[1] ? "" : "Computer", this.#gameType === GameType[1] ? 1 : 0);
+    this.#playerOne = new Player(this.#gameType === GameType[3] ? "Computer" : "", this.#gameType === GameType[3] ? 0 : 1);
+    this.#playerTwo = new Player(this.#gameType === GameType[1] ? "" : "Computer", this.#gameType === GameType[1] ? 1 : 0);
   }
 
   set gameType(option: string) {
@@ -27,6 +27,12 @@ export default class GameSetup {
   }
   get gameType() {
     return this.#gameType;
+  }
+  get playerOne() {
+    return { name: this.#playerOne.name, playerType: this.#playerOne.playerType }
+  }
+  get playerTwo() {
+    return { name: this.#playerTwo.name, playerType: this.#playerTwo.playerType }
   }
 } 
 
