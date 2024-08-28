@@ -1,16 +1,16 @@
-//import Player from "./Player.js";
+import Player from "./Player.js";
 import prompt from "../helpers/prompt.js";
 import { GameType } from "../types/types.js";
 
 export default class GameSetup {
   #gameType: string = "";
-  //_playerOne: Player;
-  //_playerTwo: Player;
+  playerOne: Player;
+  playerTwo: Player;
 
   constructor() {
     this.gameType = "";
-    //this._playerOne = undefined!;
-    //this._playerTwo = undefined!;
+    this.playerOne = new Player(this.#gameType === GameType[3] ? "Computer" : "", this.#gameType === GameType[3] ? 0 : 1);
+    this.playerTwo = new Player(this.#gameType === GameType[1] ? "" : "Computer", this.#gameType === GameType[1] ? 1 : 0);
   }
 
   set gameType(option: string) {
