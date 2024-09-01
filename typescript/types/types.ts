@@ -20,3 +20,10 @@ export type GamePlayer = {
   name: string;
   playerType: PlayerType;
 }
+
+export enum BoardProps {
+  Rows = 6,
+  Cols = 7,
+}
+export type Matrix = (Color | null)[][];
+
