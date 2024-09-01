@@ -4,7 +4,7 @@ import Moves from "./Moves.js";
 import GameChecker from "./GameChecker.js";
 
 export default class CurrentGame {
-  currentPlayer: Color;
+  currentPlayer: number;
   players: GamePlayer[];
   board: Board;
   moves: Moves;
@@ -26,7 +26,7 @@ export default class CurrentGame {
       this.moves.makeMove(
         this.board.matrix,
         this.players[this.currentPlayer - 1],
-        Color[this.currentPlayer]
+        this.currentPlayer
       );
       this.gameChecker.checkForWin(this.board.matrix, this.moves.lastMove);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
