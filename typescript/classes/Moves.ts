@@ -1,5 +1,5 @@
 import Input from "./Input.js";
-import { Move, Matrix, GamePlayer, Color, RegExEnum } from "../types/types.js";
+import { Move, Matrix, GamePlayer, Color, RegExEnum, BoardProps } from "../types/types.js";
 
 export default class Moves {
   movesMade: number;
@@ -59,5 +59,14 @@ export default class Moves {
       );
     }
     return validMove;
+  }
+  moveIsValid(matrix: Matrix, move: string) {
+    const col = +move - 1;
+    for (let row = BoardProps.Rows - 1; row >= 0; row--) {
+      if (!matrix[row][col]) {
+        return { row, col };
+      }
+    }
+    return null;
   }
 }
