@@ -16,8 +16,20 @@ export default class CurrentGame {
     this.board = new Board();
     this.moves = new Moves();
     this.gameChecker = new GameChecker();
+    this.gameLoop();
   }
 
-
-
+  gameLoop() {
+    while (!this.gameChecker.isGameOver) {
+      console.clear();
+      this.board.render();
+      this.moves.makeMove(
+        this.board.matrix,
+        this.players[this.currentPlayer - 1],
+        Color[this.currentPlayer]
+      );
+      this.gameChecker.checkForWin(this.board.matrix, this.moves.lastMove);
+      this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    }
+  }
 }
