@@ -25,5 +25,6 @@ export enum BoardProps {
   Rows = 6,
   Cols = 7,
 }
-export type Matrix = (Color | null)[][];
+
+export type Matrix = (string | null)[][];
 
