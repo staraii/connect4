@@ -28,7 +28,7 @@ export default class CurrentGame {
         this.players[this.currentPlayer - 1],
         this.currentPlayer
       );
-      this.gameChecker.checkForWin(this.board.matrix, this.moves.lastMove);
+      this.gameChecker.checkForWin(this.board.matrix, this.moves.lastMove, this.moves.movesMade);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
     }
   }
