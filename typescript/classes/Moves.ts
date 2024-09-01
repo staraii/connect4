@@ -50,4 +50,14 @@ export default class Moves {
     }
     return validMove;
   }
+  computerEasyMove(matrix: Matrix) {
+    let validMove = null;
+    while (!validMove) {
+      validMove = this.moveIsValid(
+        matrix,
+        Math.floor(Math.random() * (7 - 1 + 1)) + 1 + ""
+      );
+    }
+    return validMove;
+  }
 }
