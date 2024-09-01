@@ -34,3 +34,7 @@ export enum RegExEnum {
   PlayerName = "^[w]{1,15}$",
 }
 
+export type Move = {
+  row: number;
+  col: number;
+};
