@@ -1,4 +1,4 @@
-import { Color, GamePlayer } from "../types/types.js";
+import { GamePlayer } from "../types/types.js";
 import Board from "./Board.js";
 import Moves from "./Moves.js";
 import GameChecker from "./GameChecker.js";
