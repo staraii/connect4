@@ -1,7 +1,7 @@
-import { BoardProps } from "../types/types.js";
+import { BoardProps, Matrix } from "../types/types.js";
 
 export default class Board {
-  matrix: (string | null)[][];
+  matrix: Matrix;
   rows: BoardProps;
   cols: BoardProps;
 
