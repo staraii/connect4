@@ -1,5 +1,5 @@
 import Input from "./Input.js";
-import { Move, Matrix, GamePlayer, Color } from "../types/types.js";
+import { Move, Matrix, GamePlayer, Color, RegExEnum } from "../types/types.js";
 
 export default class Moves {
   movesMade: number;
@@ -28,5 +28,26 @@ export default class Moves {
       this.lastMove = validMove;
       this.movesMade++;
     }
+  }
+  playerMove(matrix: Matrix, player: string, color: string) {
+    let validMove = null;
+    while (!validMove) {
+      try {
+        const choosenColumn = Input.getValid(
+          `(${color}) ${player}'s turn. Choose column (1-7): \n`,
+          "Invalid column number! Please try again.\n",
+          RegExEnum.Column
+        );
+        validMove = this.moveIsValid(matrix, choosenColumn);
+        if (!validMove) {
+          throw new Error("Choosen column is full, please try again.\n");
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.log(error.message);
+        }
+      }
+    }
+    return validMove;
   }
 }
