@@ -1,5 +1,5 @@
 import Input from "./Input.js";
-import { Move, Matrix, GamePlayer, Color, RegExEnum, BoardProps } from "../types/types.js";
+import { Move, Matrix, GamePlayer, Color, RegExes, BoardProps } from "../types/types.js";
 
 export default class Moves {
   movesMade: number;
@@ -36,7 +36,7 @@ export default class Moves {
         const choosenColumn = Input.getValid(
           `(${color}) ${player}'s turn. Choose column (1-7): `,
           "Invalid column number! Please try again.\n",
-          RegExEnum.Column
+          RegExes.Column
         );
         validMove = this.moveIsValid(matrix, choosenColumn);
         if (!validMove) {
