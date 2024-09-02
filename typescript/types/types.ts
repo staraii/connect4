@@ -32,7 +32,8 @@ export type Matrix = (string | null)[][];
 export enum RegExes {
   Column = 0,
   GameType = 1,
-  PlayerName = 2
+  Level = 2,
+  PlayerName = 3
 }
 
 export type Move = {
