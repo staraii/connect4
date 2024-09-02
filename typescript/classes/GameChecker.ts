@@ -40,4 +40,16 @@ export default class GameChecker {
       }
     }
   }
+  checkVertical(board: Matrix, lastMove: Move, player: string) {
+    const result: number = board.reduce((count, row) => {
+      if (row[lastMove.col] === player) {
+        return count + 1;
+      } else {
+        return 0;
+      }
+    }, 0);
+    if (result >= 4) {
+      return true;
+    }
+  }
 }
