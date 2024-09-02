@@ -1,5 +1,5 @@
-import prompt from "../helpers/prompt.js";
-import { PlayerType } from "../types/types.js";
+import { PlayerType, RegExes } from "../types/types.js";
+import Input from "./Input.js";
 
 export default class Player {
   #name: string = "";
@@ -10,16 +10,11 @@ export default class Player {
     this.playerType = playerType;
   }
 
-  set name(value: string) {
-    if (value.trim().length === 0) {
-      value = prompt("Enter player name: ");
+  set name(nameInput: string) {
+    if (nameInput === "") {
+      nameInput = Input.getValid("Enter player name: ", "Player name must be 1-15 characters long. (Valid characters are letters, numbers and _)", RegExes.PlayerName);
     }
-    while (value.trim().length === 0) {
-      console.clear();
-      console.log("Player name must be at least on character long. Please try again!");
-      value = prompt("Enter player name: ");
-    }
-    this.#name = value;
+    this.#name = nameInput;
   }
 
   get name() {
@@ -32,12 +27,7 @@ export default class Player {
     }
     if (typeInput === 0) {
       console.log("\n1. Easy \n2. Hard");
-      typeInput = +prompt("Select computer difficulty level(1-2): ");
-      while (typeInput < 1 || typeInput > 2) {
-        console.log("\nInvalid option! Please try again. \n1. Easy \n2. Hard");
-        typeInput = +prompt("Select computer difficulty level(1-2): ");
-      }
-      console.log("Computer level " + PlayerType[typeInput + 1] + " selected.");
+      typeInput = +Input.getValid("Select computer difficulty level(1-2): ", "Invalid option! Please try again! \n1. Easy \n2. Hard", RegExes.Level);
       this.#playerType = typeInput + 1;
     }
   }
