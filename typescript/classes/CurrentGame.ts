@@ -1,4 +1,4 @@
-import { GamePlayer } from "../types/types.js";
+import { GamePlayer, Color } from "../types/types.js";
 import Board from "./Board.js";
 import Moves from "./Moves.js";
 import GameChecker from "./GameChecker.js";
@@ -28,8 +28,15 @@ export default class CurrentGame {
         this.players[this.currentPlayer - 1],
         this.currentPlayer
       );
-      this.gameChecker.checkForWin(this.board.matrix, this.moves.lastMove, this.moves.movesMade);
+      this.gameChecker.checkForWin(this.board.matrix, this.moves.lastMove, this.moves.movesMade, this.currentPlayer);
       this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    }
+    if (this.gameChecker.isDraw) {
+      console.log("Game ended in a draw!");
+    }
+    if (this.gameChecker.isWinner) {
+      const winner = this.players[this.gameChecker.isWinner - 1];
+      console.log(`${winner.name} (${Color[this.gameChecker.isWinner]}) won!`);
     }
   }
 }
