@@ -3,8 +3,9 @@ import prompt from "../helpers/prompt.js";
 export default class Input {
   static columnRegEx = /^[1-7]$/;
   static gameTypeRegEx = /^[1-3]$/;
+  static difficultyLevel = /^[1-2]$/;
   static playerNameRegEx = /\w{1,15}/;
-  static regExes = [this.columnRegEx, this.gameTypeRegEx, this.playerNameRegEx];
+  static regExes = [this.columnRegEx, this.gameTypeRegEx, this.difficultyLevel, this.playerNameRegEx];
 
   static getValid(msg: string, errMsg: string, pattern: number): string {
     let validInput = null;
