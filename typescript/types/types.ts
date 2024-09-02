@@ -28,10 +28,11 @@ export enum BoardProps {
 
 export type Matrix = (string | null)[][];
 
-export enum RegExEnum {
-  Column = "^[1-7]$",
-  GameType = "^[1-3]$",
-  PlayerName = "^[w]{1,15}$",
+
+export enum RegExes {
+  Column = 0,
+  GameType = 1,
+  PlayerName = 2
 }
 
 export type Move = {
