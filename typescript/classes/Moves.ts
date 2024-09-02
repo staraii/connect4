@@ -34,7 +34,7 @@ export default class Moves {
     while (!validMove) {
       try {
         const choosenColumn = Input.getValid(
-          `(${color}) ${player}'s turn. Choose column (1-7): \n`,
+          `(${color}) ${player}'s turn. Choose column (1-7): `,
           "Invalid column number! Please try again.\n",
           RegExEnum.Column
         );
