@@ -1,23 +1,26 @@
 import prompt from "../helpers/prompt.js";
 
 export default class Input {
-  static getValid(msg: string, errMsg: string, pattern: string): string {
-    const regEx = new RegExp(pattern);
+  static columnRegEx = /^[1-7]$/;
+  static gameTypeRegEx = /^[1-3]$/;
+  static playerNameRegEx = /\w{1,15}/;
+  static regExes = [this.columnRegEx, this.gameTypeRegEx, this.playerNameRegEx];
+
+  static getValid(msg: string, errMsg: string, pattern: number): string {
     let validInput = null;
     do {
       try {
         const userInput = prompt(msg);
-        if (!regEx.test(userInput)) {
-          throw new Error(errMsg)
+        if (!this.regExes[pattern].test(userInput)) {
+          throw new Error(errMsg);
         }
         validInput = userInput;
       } catch (error) {
         if (error instanceof Error) {
-          console.log(error.message)
+          console.log(error.message);
         }
       }
     } while (!validInput);
-
     return validInput;
   }
 }
