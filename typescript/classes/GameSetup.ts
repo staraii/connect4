@@ -1,6 +1,6 @@
 import Player from "./Player.js";
-import prompt from "../helpers/prompt.js";
-import { GameType } from "../types/types.js";
+import { GameType, RegExes } from "../types/types.js";
+import Input from "./Input.js";
 
 export default class GameSetup {
   #gameType: string = "";
@@ -14,15 +14,8 @@ export default class GameSetup {
   }
 
   set gameType(option: string) {
-    function validateInput(input: string) {
-      return /^[1-3]$/.test(input);
-    }
-    let valid = validateInput(option);
-    while (!valid) {
-      console.log("1. Dual player \n2. Single player \n3. AI \n");
-      option = prompt(`Select game type (1-3): `);
-      validateInput(option) ? valid = true : (console.clear(), console.log("Invalid input, please try again."));
-    }
+    console.log("1. Dual player \n2. Single player \n3. AI \n");
+    option = Input.getValid("Select game type (1-3): ", "Invalid input, please try again!", RegExes.GameType);
     this.#gameType = GameType[+option];
   }
   get gameType() {
