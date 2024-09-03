@@ -5,7 +5,8 @@ export default class Input {
   static gameTypeRegEx = /^[1-3]$/;
   static difficultyLevel = /^[1-2]$/;
   static playerNameRegEx = /\w{1,15}/;
-  static regExes = [this.columnRegEx, this.gameTypeRegEx, this.difficultyLevel, this.playerNameRegEx];
+  static playAgainRegEx = /^[YyNn]$/;
+  static regExes = [this.columnRegEx, this.gameTypeRegEx, this.difficultyLevel, this.playerNameRegEx, this.playAgainRegEx];
 
   static getValid(msg: string, errMsg: string, pattern: number): string {
     let validInput = null;
