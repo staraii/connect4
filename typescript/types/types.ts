@@ -33,7 +33,8 @@ export enum RegExes {
   Column = 0,
   GameType = 1,
   Level = 2,
-  PlayerName = 3
+  PlayerName = 3,
+  PlayAgain = 4
 }
 
 export type Move = {
