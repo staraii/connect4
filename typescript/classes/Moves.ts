@@ -16,11 +16,9 @@ export default class Moves {
     const cols = [];
     for (let col = 0; col < BoardProps.Cols; col++){
       if (this.columnStatus[col] > 0) {
-        //console.log(this.columnStatus[col]);
         cols.push(col);
       }
     }
-    //console.log(cols)
     return cols;
   }
 
@@ -66,14 +64,5 @@ export default class Moves {
         return { row: r, col: c }
       }
     }
-  }
-  moveIsValid(matrix: Matrix, move: string) {
-    const col = +move - 1;
-    for (let row = BoardProps.Rows - 1; row >= 0; row--) {
-      if (!matrix[row][col]) {
-        return { row, col };
-      }
-    }
-    return null;
   }
 }
