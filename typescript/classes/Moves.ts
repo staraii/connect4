@@ -66,6 +66,13 @@ export default class Moves {
   computerEasyMove() {
     return this.validColumns[Math.floor(Math.random() * (this.validColumns.length - 0)) + 0];
   }
+  getMovePosition(board: Matrix, c: number) {
+    for (let r = 5; r >= 0; r--){
+      if (!board[r][c]) {
+        return { row: r, col: c }
+      }
+    }
+  }
   moveIsValid(matrix: Matrix, move: string) {
     const col = +move - 1;
     for (let row = BoardProps.Rows - 1; row >= 0; row--) {
