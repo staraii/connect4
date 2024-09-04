@@ -22,26 +22,22 @@ export default class Moves {
     return cols;
   }
 
-  makeMove(matrix: Matrix, player: GamePlayer, currentPlayer: number) {
-    let validMove = null;
+  makeMove(board: Matrix, player: GamePlayer, currentPlayer: number) {
     if (this.movesMade >= 42) {
       return;
     }
+    const validColumn = player.playerType === 1 ? this.playerMove(player.name, Color[currentPlayer]) : this.computerEasyMove();
 
-    if (player.playerType === 1) {
-      validMove = this.playerMove(matrix, player.name, Color[currentPlayer]);
-    }
-
-    if (player.playerType === 2) {
-      validMove = this.computerEasyMove(matrix);
-    }
+    const validMove = this.getMovePosition(board, validColumn);
 
     if (validMove) {
-      matrix[validMove.row][validMove.col] = Color[currentPlayer];
+      board[validMove.row][validMove.col] = Color[currentPlayer];
       this.lastMove = validMove;
+      this.columnStatus[validMove.col]--;
       this.movesMade++;
     }
   }
+  
   playerMove(player: string, color: string) {
     let validMove = null;
     while (!validMove) {
@@ -51,7 +47,7 @@ export default class Moves {
           "Invalid column number! Please try again.\n",
           RegExes.Column
         );
-        validMove = this.validColumns.includes(choosenColumn)
+        validMove = this.validColumns.includes(choosenColumn) ? choosenColumn : null;
         if (!validMove) {
           throw new Error("Choosen column is full, please try again.\n");
         }
