@@ -11,6 +11,17 @@ export default class Moves {
     this.columnStatus = new Array(BoardProps.Cols).fill(6);
     this.lastMove = undefined!;
   }
+
+  get validColumns() {
+    const cols = [];
+    for (let col = 0; col < BoardProps.Cols; col++){
+      if (this.columnStatus[col] > 0) {
+        cols.push(col);
+      }
+    }
+    return cols;
+  }
+
   makeMove(matrix: Matrix, player: GamePlayer, currentPlayer: number) {
     let validMove = null;
     if (this.movesMade >= 42) {
