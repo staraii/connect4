@@ -1,12 +1,14 @@
 import Input from "./Input.js";
-import { Move, Matrix, GamePlayer, Color, RegExes, BoardProps } from "../types/types.js";
+import { Move, Matrix, GamePlayer, Color, RegExes, BoardProps, ColumnStatus } from "../types/types.js";
 
 export default class Moves {
   movesMade: number;
+  columnStatus: ColumnStatus;
   lastMove: Move;
 
   constructor() {
     this.movesMade = 0;
+    this.columnStatus = new Array(BoardProps.Cols).fill(6);
     this.lastMove = undefined!;
   }
   makeMove(matrix: Matrix, player: GamePlayer, currentPlayer: number) {

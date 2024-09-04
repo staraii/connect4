@@ -41,3 +41,5 @@ export type Move = {
   row: number;
   col: number;
 };
+
+export type ColumnStatus = (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
