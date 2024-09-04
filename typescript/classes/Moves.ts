@@ -42,16 +42,16 @@ export default class Moves {
       this.movesMade++;
     }
   }
-  playerMove(matrix: Matrix, player: string, color: string) {
+  playerMove(player: string, color: string) {
     let validMove = null;
     while (!validMove) {
       try {
-        const choosenColumn = Input.getValid(
+        const choosenColumn = +Input.getValid(
           `(${color}) ${player}'s turn. Choose column (1-7): `,
           "Invalid column number! Please try again.\n",
           RegExes.Column
         );
-        validMove = this.moveIsValid(matrix, choosenColumn);
+        validMove = this.validColumns.includes(choosenColumn)
         if (!validMove) {
           throw new Error("Choosen column is full, please try again.\n");
         }
