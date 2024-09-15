@@ -34,4 +34,8 @@ export default class AI {
     }
     return true;
   }
+
+  isValidColumn(board: Matrix, col: number) {
+    return !board[0][col] ? true : false;
+  }
 }
