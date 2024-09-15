@@ -1,29 +1,27 @@
-import { Matrix, Move, Color } from "../types/types.js";
+import { Matrix, Move } from "../types/types.js";
+import Ai from "./AI.js";
 
 export default class GameChecker {
   isGameOver: boolean;
   isDraw: boolean;
   isWinner: number | undefined;
+  ai: Ai;
 
   constructor() {
     this.isGameOver = false;
     this.isDraw = false;
     this.isWinner = undefined;
+    this.ai = new Ai();
   }
   checkForWin(
-    board: Matrix,
-    lastMove: Move,
-    movesMade: number,
-    currentPlayer: number
+    board: Matrix
   ) {
-    const player = Color[currentPlayer];
-    if (
-      this.checkBoard(board, lastMove, player)
-    ) {
-      this.isWinner = currentPlayer;
+    const winner = this.ai.checkWinningMove(board);
+    if (winner === "X" || winner === "O") {
+      this.isWinner = winner === "X" ? 1 : 2;
       this.isGameOver = true;
     }
-    if (movesMade >= 42 && !this.isWinner) {
+    if (winner === "DRAW") {
       this.isDraw = true;
       this.isGameOver = true;
     }
@@ -33,11 +31,15 @@ export default class GameChecker {
       [lastMove.row - 3, lastMove.col - 3],
       [lastMove.row - 3, lastMove.col + 3],
     ];
-    for (let i = 0; i < 4; i++){
-      const horizontal = board[lastMove.row].slice(i, i + 4).every(col => col === player);
+    for (let i = 0; i < 4; i++) {
+      const horizontal = board[lastMove.row]
+        .slice(i, i + 4)
+        .every((col) => col === player);
       let vertical = false;
       if (i < 3) {
-        vertical = [0, 1, 2, 3].every((row) => board[i + row][lastMove.col] === player);
+        vertical = [0, 1, 2, 3].every(
+          (row) => board[i + row][lastMove.col] === player
+        );
       }
       if (horizontal || vertical) {
         return true;
@@ -48,9 +50,9 @@ export default class GameChecker {
       let roTwo = diagonalOffsets[1][0] + i;
       let coTwo = diagonalOffsets[1][1] - i;
       if (!(roOne < 0 || roOne > 2 || coOne < 0 || coOne > 3)) {
-        for (let j = 0; j < 4; j++){
+        for (let j = 0; j < 4; j++) {
           if (board[roOne + j][coOne + j] === player) {
-            diagonal++
+            diagonal++;
           }
         }
         if (diagonal === 4) {
@@ -58,10 +60,10 @@ export default class GameChecker {
         }
         diagonal = 0;
       }
-      if (!(roTwo < 0 || roTwo > 2 || coTwo < 0 || coTwo > 3)) {
-        for (let j = 0; j < 4; j++){
+      if (!(roTwo < 0 || roTwo > 2 || coTwo < 3 || coTwo > 6)) {
+        for (let j = 0; j < 4; j++) {
           if (board[roTwo + j][coTwo - j] === player) {
-            diagonal++
+            diagonal++;
           }
         }
         if (diagonal === 4) {
