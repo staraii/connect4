@@ -38,4 +38,54 @@ export default class AI {
   isValidColumn(board: Matrix, col: number) {
     return !board[0][col] ? true : false;
   }
+
+  checkWinningMove(board: Matrix) {
+    let players = ["X", "O"];
+    for (let player of players) {
+      // Horizontal
+      for (let row = 0; row < this.ROWS; row++) {
+        for (let col = 0; col < this.COLS - 3; col++) {
+          if (
+            board[row].slice(col, col + 4).every((column) => column === player)
+          ) {
+            return player;
+          }
+        }
+      }
+      // Vertical
+      for (let col = 0; col < this.COLS; col++) {
+        for (let row = 0; row < this.ROWS - 3; row++) {
+          if ([0, 1, 2, 3].every((r) => board[row + r][col] === player)) {
+            return player;
+          }
+        }
+      }
+      for (let row = 0; row < this.ROWS - 3; row++) {
+        for (let col = 0; col < this.COLS - 3; col++) {
+          if (
+            [0, 1, 2, 3].every(
+              (offset) => board[row + offset][col + offset] === player
+            )
+          ) {
+            return player;
+          }
+        }
+      }
+      for (let row = 0; row < this.ROWS - 3; row++) {
+        for (let col = 3; col < this.COLS; col++) {
+          if (
+            [0, 1, 2, 3].every(
+              (offset) => board[row + offset][col - offset] === player
+            )
+          ) {
+            return player;
+          }
+        }
+      }
+    }
+    if (this.getValidMoves(board).length === 0) {
+      return "DRAW";
+    }
+    return false;
+  }
 }
