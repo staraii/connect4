@@ -88,4 +88,60 @@ export default class AI {
     }
     return false;
   }
+
+  evaluatePosition(board: Matrix, player: string, length: number) {
+    let count = 0;
+    // Horizontal
+    for (let row = 0; row < this.ROWS; row++) {
+      for (let col = 0; col <= this.COLS - length; col++) {
+        const arr = [];
+        for (let i = 0; i < length; i++) {
+          arr.push(board[row][col + i]);
+        }
+        if (arr.every((cell) => cell === player)) {
+          count++;
+        }
+      }
+    }
+    // Vertical
+    for (let col = 0; col < this.COLS; col++) {
+      for (let row = this.ROWS - 1; row >= length - 1; row--) {
+        const arr = [];
+        for (let i = 0; i < length; i++) {
+          arr.push(board[row - i][col]);
+        }
+        if (arr.includes(null)) {
+          break;
+        }
+        if (arr.every((cell) => cell === player)) {
+          count++;
+        }
+      }
+    }
+    // Positively sloped diagonal
+    for (let row = 0; row <= this.ROWS - length; row++) {
+      for (let col = 0; col <= this.COLS - length; col++) {
+        const arr = [];
+        for (let i = 0; i < length; i++) {
+          arr.push(board[row + i][col + i]);
+        }
+        if (arr.every((element) => element === player)) {
+          count++;
+        }
+      }
+    }
+    // Negatively sloped diagonal
+    for (let row = 0; row <= this.ROWS - length; row++) {
+      for (let col = this.COLS - 1; col >= length - 1; col--) {
+        const arr = [];
+        for (let i = 0; i < length; i++) {
+          arr.push(board[row + i][col - i]);
+        }
+        if (arr.every((element) => element === player)) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
 }
