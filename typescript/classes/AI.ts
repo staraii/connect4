@@ -192,14 +192,57 @@ export default class AI {
 
     for (const move of moves) {
       this.makeMove(board, move, player);
-      const score = -this.negaScout(board, depth - 1, -Infinity, Infinity, player === "X" ? "O" : "X");
+      const score = -this.negaScout(
+        board,
+        depth - 1,
+        -Infinity,
+        Infinity,
+        player === "X" ? "O" : "X"
+      );
       this.undoMove(board, move);
-      
+
       if (score > bestScore) {
         bestScore = score;
         bestMove = move;
       }
     }
     return bestMove;
+  }
+
+  negaScout(board: Matrix, depth: number, alpha: number, beta: number, player: string) {
+    const isGameOver = this.checkWinningMove(board);
+    if (depth === 0 || isGameOver) {
+      if (isGameOver === "X") { return player === "X" ? Infinity : -Infinity }
+      if (isGameOver === "O") { return player === "O" ? Infinity : -Infinity }
+      if (isGameOver === "DRAW") { return 0 }
+      return this.evaluateBoard(board, player);
+    }
+
+    const moves = this.getValidMoves(board);
+    let score: number;
+    let bestScore = -Infinity;
+
+    for (let i = 0; i < moves.length; i++) {
+      this.makeMove(board, moves[i], player);
+
+      if (i === 0) {
+        score = -this.negaScout(board, depth - 1, beta, alpha, player === "X" ? "O" : "X");
+      } else {
+        score = -this.negaScout(board, depth - 1, -alpha - 1, -alpha, player === "X" ? "O" : "X");
+        if (score > alpha && score < beta) {
+          score = -this.negaScout(board, depth - 1, -beta, -alpha, player === "X" ? "O" : "X");
+        }
+      }
+      this.undoMove(board, moves[i]);
+
+      if (score > bestScore) {
+        bestScore = score;
+      }
+      alpha = Math.max(alpha, score);
+      if (alpha >= beta) {
+        break;
+      }
+    }
+    return bestScore;
   }
 }
