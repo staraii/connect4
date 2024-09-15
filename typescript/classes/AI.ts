@@ -158,4 +158,20 @@ export default class AI {
       this.evaluatePosition(board, opponent, 4) * 1000;
     return score;
   }
+
+  sortMoves(board: Matrix, player: string) {
+    const moves = this.getValidMoves(board);
+    moves.sort((a, b) => {
+      this.makeMove(board, a, player);
+      const scoreA = this.evaluateBoard(board, player);
+      this.undoMove(board, a);
+
+      this.makeMove(board, b, player);
+      const scoreB = this.evaluateBoard(board, player);
+      this.undoMove(board, b);
+
+      return scoreB - scoreA;
+    });
+    return moves;
+  }
 }
