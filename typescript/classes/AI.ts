@@ -144,4 +144,18 @@ export default class AI {
     }
     return count;
   }
+
+  evaluateBoard(board: Matrix, player: string) {
+    const opponent = player === "X" ? "O" : "X";
+    let score = 0;
+    score +=
+      this.evaluatePosition(board, player, 2) * 2 +
+      this.evaluatePosition(board, player, 3) * 5 +
+      this.evaluatePosition(board, player, 4) * 1000;
+    score -=
+      this.evaluatePosition(board, opponent, 2) * 2 +
+      this.evaluatePosition(board, opponent, 3) * 5 +
+      this.evaluatePosition(board, opponent, 4) * 1000;
+    return score;
+  }
 }
