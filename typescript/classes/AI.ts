@@ -3,12 +3,21 @@ import { Matrix, BoardProps, Color } from "../types/types.js";
 export default class AI {
   ROWS: number;
   COLS: number;
+  weightOfPositions: number[][];
   currentPlayer: Color;
   movesMade: number;
 
   constructor() {
     this.ROWS = BoardProps.Rows;
     this.COLS = BoardProps.Cols;
+    this.weightOfPositions = [
+      [3, 4, 5, 7, 5, 4, 3],
+      [4, 6, 8, 10, 8, 6, 4],
+      [5, 7, 11, 13, 11, 7, 5],
+      [5, 7, 11, 13, 11, 7, 5],
+      [4, 6, 8, 10, 8, 6, 4],
+      [3, 4, 5, 7, 5, 4, 3],
+    ];
     this.currentPlayer = 1;
     this.movesMade = 0;
   }
@@ -209,12 +218,24 @@ export default class AI {
     return bestMove;
   }
 
-  negaScout(board: Matrix, depth: number, alpha: number, beta: number, player: string) {
+  negaScout(
+    board: Matrix,
+    depth: number,
+    alpha: number,
+    beta: number,
+    player: string
+  ) {
     const isGameOver = this.checkWinningMove(board);
     if (depth === 0 || isGameOver) {
-      if (isGameOver === "X") { return player === "X" ? Infinity : -Infinity }
-      if (isGameOver === "O") { return player === "O" ? Infinity : -Infinity }
-      if (isGameOver === "DRAW") { return 0 }
+      if (isGameOver === "X") {
+        return player === "X" ? Infinity : -Infinity;
+      }
+      if (isGameOver === "O") {
+        return player === "O" ? Infinity : -Infinity;
+      }
+      if (isGameOver === "DRAW") {
+        return 0;
+      }
       return this.evaluateBoard(board, player);
     }
 
@@ -226,11 +247,29 @@ export default class AI {
       this.makeMove(board, moves[i], player);
 
       if (i === 0) {
-        score = -this.negaScout(board, depth - 1, beta, alpha, player === "X" ? "O" : "X");
+        score = -this.negaScout(
+          board,
+          depth - 1,
+          beta,
+          alpha,
+          player === "X" ? "O" : "X"
+        );
       } else {
-        score = -this.negaScout(board, depth - 1, -alpha - 1, -alpha, player === "X" ? "O" : "X");
+        score = -this.negaScout(
+          board,
+          depth - 1,
+          -alpha - 1,
+          -alpha,
+          player === "X" ? "O" : "X"
+        );
         if (score > alpha && score < beta) {
-          score = -this.negaScout(board, depth - 1, -beta, -alpha, player === "X" ? "O" : "X");
+          score = -this.negaScout(
+            board,
+            depth - 1,
+            -beta,
+            -alpha,
+            player === "X" ? "O" : "X"
+          );
         }
       }
       this.undoMove(board, moves[i]);
